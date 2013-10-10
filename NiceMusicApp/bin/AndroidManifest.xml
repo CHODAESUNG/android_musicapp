@@ -24,6 +24,7 @@
         </activity>
                 
         <service android:name="com.web2korea.nicemusicapp.AudioService" android:enabled="true" />
+        <intent-filter> <action android:name="com.web2korea.nicemusicapp.AUDIOSERVICE" /></intent-filter>
         
     </application>
 

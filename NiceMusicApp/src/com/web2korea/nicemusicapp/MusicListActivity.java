@@ -53,12 +53,14 @@ public class MusicListActivity extends Activity {
         	if (__cursor.moveToPosition(position))
         	{
         		int fileColumn = __cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
-        		int mimeColumn = __cursor.getColumnIndex(MediaStore.Audio.Media.MIME_TYPE);    	
+        		int mimeColumn = __cursor.getColumnIndex(MediaStore.Audio.Media.MIME_TYPE);   
+        		int albumColumn = __cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
         		
         		String filePath = __cursor.getString(fileColumn);
         		String mineType = __cursor.getString(mimeColumn);     	
+        		String albumId = __cursor.getString(albumColumn);
         		
-            	Log.e("MusicApp", "####" + filePath);
+            	Log.e("MusicApp", "####" + filePath + "AlbumID: " + albumId);
         		
         		Intent intent = new Intent(android.content.Intent.ACTION_VIEW);     	
         		File mediaFile = new File(filePath);
@@ -82,7 +84,8 @@ public class MusicListActivity extends Activity {
 				MediaStore.Audio.Media.TITLE,
 				MediaStore.Audio.Media.ARTIST,
 				MediaStore.Audio.Media.DATA,
-				MediaStore.Audio.Media.MIME_TYPE				
+				MediaStore.Audio.Media.MIME_TYPE,
+				MediaStore.Audio.Media.ALBUM_ID
 		};
 				
 	    cursor = (Cursor) getContentResolver().query(
