@@ -10,11 +10,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/iphone"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.web2korea.nicemusicapp.AudioPlayerActivity"
+            android:name="com.web2korea.nicemusicapp.MusicListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,9 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-                
+        
+        <activity android:name="com.web2korea.nicemusicapp.AudioPlayerActivity" />        
+        
         <service android:name="com.web2korea.nicemusicapp.AudioService" android:enabled="true" />
-        <intent-filter> <action android:name="com.web2korea.nicemusicapp.AUDIOSERVICE" /></intent-filter>
+        
+        <receiver android:name="com.web2krea.nicemusicapp.MusicBroadcastReceiver" />            
         
     </application>
 

@@ -1,11 +1,8 @@
 package com.web2korea.nicemusicapp;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -19,7 +16,8 @@ public class MusicListActivity extends Activity {
     
     private ListView __musicListView = null;
     private Cursor __cursor = null;
-	
+    
+	final String MUSIC_LIST_TAG = "MusicList";	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +35,7 @@ public class MusicListActivity extends Activity {
                 
 		__cursor = getCursor();        
 		extracted(__cursor);
+		
         @SuppressWarnings("deprecation")
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.music_list_entry, __cursor, cursorColumns, id);
         __musicListView.setAdapter(adapter);
@@ -46,25 +45,21 @@ public class MusicListActivity extends Activity {
     private AdapterView.OnItemClickListener __onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
-                long l_position) {
-        	        	       	
-        	Log.e("MusicApp", "####" + position);
-        	
+                long l_position) { 	             	
+       	
         	if (__cursor.moveToPosition(position))
         	{
         		int fileColumn = __cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
-        		int mimeColumn = __cursor.getColumnIndex(MediaStore.Audio.Media.MIME_TYPE);   
         		int albumColumn = __cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
         		
         		String filePath = __cursor.getString(fileColumn);
-        		String mineType = __cursor.getString(mimeColumn);     	
         		String albumId = __cursor.getString(albumColumn);
         		
-            	Log.e("MusicApp", "####" + filePath + "AlbumID: " + albumId);
+            	Log.i(MUSIC_LIST_TAG, ">>>" + filePath + " AlbumID: " + albumId);
         		
-        		Intent intent = new Intent(android.content.Intent.ACTION_VIEW);     	
-        		File mediaFile = new File(filePath);
-        		intent.setDataAndType(Uri.fromFile(mediaFile), mineType);
+        		Intent intent = new Intent(getBaseContext(), com.web2korea.nicemusicapp.AudioPlayerActivity.class);     
+        		intent.putExtra("filePath", filePath);
+        		intent.putExtra("albumId", albumId);
         		startActivity(intent);
         	}  	  	        	
         }
@@ -102,4 +97,5 @@ public class MusicListActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+
 }
